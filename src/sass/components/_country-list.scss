@@ -1,0 +1,13 @@
+.country-list {
+  overflow-y: scroll;
+  height: 100vh;
+
+  th,
+  td {
+    padding: 0.5rem;
+  }
+
+  tr:not(:first-child):hover {
+    cursor: pointer;
+  }
+}

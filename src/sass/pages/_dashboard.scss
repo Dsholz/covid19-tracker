@@ -1,3 +1,11 @@
 .dashboard {
-  width: 75%;
+  display: flex;
+
+  &__left {
+    width: 70%;
+  }
+
+  &__right {
+    width: 30%;
+  }
 }
