@@ -3,13 +3,14 @@
   overflow-y: scroll;
   overflow-x: hidden;
   height: 100vh;
+  width: 100%;
 
   th,
   td {
     padding: 0.5rem;
   }
 
-  tr:not(:first-child):hover {
+  tbody tr:hover {
     cursor: pointer;
   }
 }

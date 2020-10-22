@@ -8,7 +8,6 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated"
 am4core.useTheme(am4themes_animated)
 
 function StatChart(props) {
-
   const statChartRef = useRef(null)
   const { setCurrentStatData, currentStatData } = props
 
@@ -57,7 +56,7 @@ function StatChart(props) {
     return () => {
       statChart.dispose();
     };
-  }, [currentStatData]);
+  });
 
     useEffect(() => {
         getCovidHistoricalData()
@@ -66,7 +65,7 @@ function StatChart(props) {
 
           setCurrentStatData(formattedData)
         })
-    }, [])
+    }, [setCurrentStatData])
 
     return (
         <div id="stat-chart" className='stat-chart'></div>

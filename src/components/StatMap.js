@@ -1,17 +1,38 @@
-import React, { Fragment, useLayoutEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4maps from "@amcharts/amcharts4/maps";
-import am4geodata_worldHigh from "@amcharts/amcharts4-geodata/worldHigh"
-import am4geodata_usaLow from "@amcharts/amcharts4-geodata/usaHigh"
-import { useEffect } from 'react';
+import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow"
+import am4themes_animated from "@amcharts/amcharts4/themes/animated"
+import { getCovidCountriesData } from '../Api';
 
-function StatMap() {
+am4core.useTheme(am4themes_animated)
+
+function StatMap(props) {
+    const { dataReady } = props
     const statMapRef = useRef(null)
+    const [countryData, setCountryData] = useState([])
+
+    useEffect(() => {
+      getCovidCountriesData()
+        .then(data => {
+            const editedData = data.map(country => ({
+              latitude: country.countryInfo.lat,
+              longitude: country.countryInfo.long,
+              cases: country.cases,
+              recovered: country.recovered,
+              deaths: country.deaths,
+              active: country.cases - (country.recovered + country.deaths)
+            }))
+
+            setCountryData(editedData)
+        })
+    }, [])
 
     useLayoutEffect(() => {
+      if (dataReady && countryData.length !== 0) {
         let statMap = am4core.create("stat-map", am4maps.MapChart);
 
-        statMap.geodata = am4geodata_worldHigh;
+        statMap.geodata = am4geodata_worldLow;
 
         statMap.projection = new am4maps.projections.Miller()
 
@@ -19,60 +40,48 @@ function StatMap() {
         polygonSeries.useGeodata = true;
         polygonSeries.exclude = ['AQ']
 
-        polygonSeries.data = [{
-            id: "US",
-            name: "United States",
-            value: 100
-          }, {
-            id: "FR",
-            name: "France",
-            value: 50
-          }]
+        let imageSeries = statMap.series.push(new am4maps.MapImageSeries());
+        imageSeries.data = countryData;
+        imageSeries.dataFields.value = "cases";
+
+        let imageTemplate = imageSeries.mapImages.template;
+        imageTemplate.nonScaling = true
+        imageTemplate.propertyFields.latitude = "latitude";
+        imageTemplate.propertyFields.longitude = "longitude";
+
+        let circle = imageTemplate.createChild(am4core.Circle);
+        circle.fillOpacity = 0.7;
+        circle.fill = "#EBE40C";
+        circle.tooltipText = "{name}: [bold]{value}[/]";
+
+
+        imageSeries.heatRules.push({
+          "target": circle,
+          "property": "radius",
+          "min": 4,
+          "max": 15,
+          "dataField": "value"
+        })
+
+        document.querySelectorAll('.countryInfo').forEach(country => {
+          country.addEventListener('click', () => {
+            const countryId = country.childNodes[4].textContent
+
+            statMap.zoomToMapObject(polygonSeries.getPolygonById(countryId))
+          })
+        })
 
         statMap.series.push(polygonSeries);
-
-        let polygonTemplate = polygonSeries.mapPolygons.template
-        polygonTemplate.tooltipText = '{name} : {value}'
-
-
-        let countryCircleSeries = statMap.series.push(new am4maps.MapImageSeries())
-
-        countryCircleSeries.data = [{
-            "latitude": 48.856614,
-            "longitude": 2.352222,
-            "title": "Paris"
-          }, {
-            "latitude": 40.712775,
-            "longitude": -74.005973,
-            "title": "New York"
-          }, {
-            "latitude": 49.282729,
-            "longitude": -123.120738,
-            "title": "Vancouver"
-          }];
-        
-        let imageSeriesTemplate = countryCircleSeries.mapImages.template
-        let circle = imageSeriesTemplate.createChild(am4core.Circle)
-        circle.radius = 6
-        circle.fill = am4core.color("#B27799")
-        circle.stroke = am4core.color("#FFFFFF")
-        circle.strokeWidth = 2
-        circle.nonScaling = true
-        circle.tooltipText = "{title} \n Latitude : {latitude} \n Longitude : {longitude}"
-
-        imageSeriesTemplate.propertyFields.latitude = "latitude"
-        imageSeriesTemplate.propertyFields.longitude = "longitude"
 
         statMapRef.current = statMap
 
         return () => {
             statMap.dispose()
-        }
-    }, [])
+        } 
+      }
+    }, [dataReady, countryData])
     return (
-        <Fragment>
             <div id="stat-map" className='stat-map'></div>
-        </Fragment>
     )
 }
 

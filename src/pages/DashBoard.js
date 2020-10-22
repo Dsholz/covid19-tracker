@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import StatChart from '../components/StatChart'
 import StatMap from '../components/StatMap'
 import CountryList from '../components/CountryList'
-import { getCovidHistoricalCountryData } from '../Api'
 import { formatHistorialCountryData } from '../utils'
 
 function DashBoard() {
     const [currentStatData, setCurrentStatData] = useState([])
+    const [dataReady, setDataReady] = useState(false)
 
     const setCountryStatData = (countryData) => {
         const formattedData = formatHistorialCountryData(countryData)
@@ -18,10 +18,10 @@ function DashBoard() {
         <div className='dashboard'>
             <div className="dashboard__left">
               <StatChart currentStatData={currentStatData} setCurrentStatData={setCurrentStatData} />
-              <StatMap/>
+              <StatMap dataReady={dataReady} />
             </div>
             <div className="dashboard__right">
-               <CountryList setCountryStatData={setCountryStatData} />
+               <CountryList setDataReady={setDataReady} setCountryStatData={setCountryStatData} />
             </div>
         </div>
     )
