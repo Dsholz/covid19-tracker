@@ -58,8 +58,8 @@ function StatMap(props) {
         imageSeries.heatRules.push({
           "target": circle,
           "property": "radius",
-          "min": 4,
-          "max": 15,
+          "min": 6,
+          "max": 18,
           "dataField": "value"
         })
 
@@ -67,7 +67,7 @@ function StatMap(props) {
           country.addEventListener('click', () => {
             const countryId = country.childNodes[4].textContent
 
-            statMap.zoomToMapObject(polygonSeries.getPolygonById(countryId))
+            countryId && statMap.zoomToMapObject(polygonSeries.getPolygonById(countryId))
           })
         })
 

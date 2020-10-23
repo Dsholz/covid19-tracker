@@ -32,8 +32,7 @@ function CountryList(props) {
     }
 
     return (
-        <div className='country-list'>
-            <table>
+            <table className='country-list'>
                 <thead>
                     <tr>
                         <th>Country</th>
@@ -54,7 +53,6 @@ function CountryList(props) {
                     ))}
                 </tbody>
             </table>
-        </div>
     )
 }
 

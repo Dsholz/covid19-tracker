@@ -3,6 +3,7 @@ import StatChart from '../components/StatChart'
 import StatMap from '../components/StatMap'
 import CountryList from '../components/CountryList'
 import { formatHistorialCountryData } from '../utils'
+import CardContainer from '../components/CardContainer'
 
 function DashBoard() {
     const [currentStatData, setCurrentStatData] = useState([])
@@ -17,6 +18,7 @@ function DashBoard() {
     return (
         <div className='dashboard'>
             <div className="dashboard__left">
+              <CardContainer/> 
               <StatChart currentStatData={currentStatData} setCurrentStatData={setCurrentStatData} />
               <StatMap dataReady={dataReady} />
             </div>
