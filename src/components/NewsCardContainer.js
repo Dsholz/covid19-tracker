@@ -11,6 +11,7 @@ function NewsCardContainer() {
 
   useEffect(() => {
     getCovid19News().then((data) => {
+      console.log(data);
       setCovid19News(data?.articles?.slice(0, 10));
       setTotalCovidNews(data?.articles);
     });
