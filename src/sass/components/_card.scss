@@ -1,8 +1,8 @@
 .card {
   display: flex;
   flex-direction: column;
+  background-color: #fff;
   transition: all 0.1s;
-  cursor: pointer;
   border-radius: 0.3rem;
   padding: 1.3rem;
 
@@ -10,16 +10,16 @@
     margin-bottom: 1rem;
   }
 
-  &--cases {
-    border-top: 0.3rem solid yellow;
+  &--yellow {
+    border-top: 0.3rem solid #eae600;
   }
 
-  &--recovered {
-    border-top: 0.3rem solid green;
+  &--green {
+    border-top: 0.3rem solid #0bd454;
   }
 
-  &--deaths {
-    border-top: 0.3rem solid red;
+  &--red {
+    border-top: 0.3rem solid #ff0000;
   }
 
   span:first-child {
@@ -28,7 +28,12 @@
     font-weight: 100;
   }
 
+  span:last-child {
+    font-size: 1.3rem;
+  }
+
   h1 {
-    font-size: 3rem;
+    font-size: 2.7rem;
+    font-weight: 600;
   }
 }

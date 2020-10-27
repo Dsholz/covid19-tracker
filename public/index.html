@@ -7,16 +7,27 @@
     <meta name="theme-color" content="#000000" />
 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-   
+
     <title>Covid 19 Tracker</title>
+
+    <style>
+      .loading-screen {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
   </head>
   <body>
-
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
     <div id="root">
-      Loading...
+      <img
+        class="loading-screen"
+        src="https://media.giphy.com/media/idShevOa24HzYTgz06/giphy-downsized.gif"
+        alt="Wash Your Hand Gif"
+      />
     </div>
-    
   </body>
 </html>

@@ -3,9 +3,34 @@
 
   &__left {
     width: 70%;
+    background-color: #fafafa;
+
+    @include respond(1150px) {
+      width: 65%;
+    }
+
+    @include respond(1000px) {
+      width: 60%;
+    }
+
+    @include respond(850px) {
+      width: 100%;
+    }
   }
 
   &__right {
     width: 30%;
+
+    @include respond(1150px) {
+      width: 35%;
+    }
+
+    @include respond(1000px) {
+      width: 40%;
+    }
+
+    @include respond(850px) {
+      display: none;
+    }
   }
 }
