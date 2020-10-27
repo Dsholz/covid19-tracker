@@ -1,0 +1,160 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 0 1.5rem;
+  padding-right: 3.5rem;
+  height: 8vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ececec;
+
+  @include respond(800px) {
+    padding: 0 1rem;
+  }
+
+  &__logo {
+    font-size: 3rem;
+    font-weight: bolder;
+
+    @include respond(800px) {
+      font-size: 2.4rem;
+    }
+
+    span {
+      background-image: linear-gradient(to right, #66d4f9, #d35794, #f6d527);
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  &__right {
+    display: flex;
+  }
+
+  &__countries-list {
+    display: none;
+    padding: 0.8rem 0.5rem;
+    margin-right: 4rem;
+
+    @include respond(850px) {
+      display: inline-block;
+    }
+
+    @include respond(800px) {
+      margin-right: 1rem;
+    }
+
+    @include respond(750px) {
+      width: 12rem;
+    }
+  }
+
+  &__navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include respond(610px) {
+      display: none;
+    }
+
+    a {
+      font-size: 1.5rem;
+      color: #000;
+      text-decoration: none;
+    }
+
+    a:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+
+  &__mobile-navigation {
+    display: none;
+    position: relative;
+    margin-left: 1.3rem;
+    cursor: pointer;
+
+    @include respond(610px) {
+      display: block;
+    }
+  }
+
+  &__mobile-navigation-button {
+    position: relative;
+    font-size: 3rem;
+    cursor: pointer;
+    margin-top: 1.6rem;
+
+    &,
+    &::before,
+    &::after {
+      display: inline-block;
+      transition: all 0.3s;
+      width: 3rem;
+      height: 2px;
+      background-color: #000;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+    }
+
+    &::before {
+      top: -0.7rem;
+    }
+    &::after {
+      top: 0.7rem;
+    }
+  }
+
+  &__mobile-navigation-dropdown {
+    display: flex;
+    flex-direction: column;
+    transition: all 0.5s;
+    transform: translate(-68%, 104%);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    padding: 1rem 3rem;
+    background-color: #1f2024;
+
+    a {
+      font-size: 1.7rem;
+      text-decoration: none;
+      color: #fff;
+
+      &:not(:last-child) {
+        margin-bottom: 0.7rem;
+      }
+    }
+  }
+
+  &__checkbox {
+    display: none;
+  }
+
+  &__checkbox:checked + label &__mobile-navigation-button {
+    background-color: transparent;
+  }
+
+  &__checkbox:checked + label &__mobile-navigation-button::before {
+    top: 0;
+    transform: rotate(135deg);
+  }
+
+  &__checkbox:checked + label &__mobile-navigation-button::after {
+    top: 0;
+    transform: rotate(-135deg);
+  }
+
+  &__checkbox:checked + label &__mobile-navigation-dropdown {
+    opacity: 1;
+  }
+}

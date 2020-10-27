@@ -1,24 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./sass/app.scss";
+import DashBoard from "./pages/DashBoard";
+import { useEffect } from "react";
+import { getCovid19News, getCovidCountriesData } from "./Api";
 
 function App() {
+  const [appDataReady, setAppDataReady] = useState(false);
+  const [countriesList, setCountriesList] = useState([]);
+  const [countriesPresentData, setCountriesPresentData] = useState([]);
+
+  useEffect(() => {
+    getCovidCountriesData().then((data) => {
+      const sortedData = data.sort((a, b) => b.cases - a.cases);
+      const countriesName = data
+        .map((country) => ({
+          id: country.countryInfo.iso2,
+          name: country.country,
+        }))
+        .sort();
+
+      setCountriesList(countriesName);
+      setCountriesPresentData(sortedData);
+      setAppDataReady(true);
+    });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {appDataReady ? (
+        <DashBoard
+          appDataReady={appDataReady}
+          countriesPresentData={countriesPresentData}
+          countriesList={countriesList}
+        />
+      ) : (
+        <img
+          className="loading-screen"
+          src="https://media.giphy.com/media/idShevOa24HzYTgz06/giphy-downsized.gif"
+          alt="Wash Your Hand Gif"
+        />
+      )}
     </div>
   );
 }

@@ -1,0 +1,8 @@
+.card-container {
+  display: grid;
+  // grid-template-rows: 13rem;
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+  gap: 2.2rem;
+  margin: 3rem 2rem;
+  scroll-margin-top: 7rem;
+}

@@ -1,0 +1,33 @@
+.news-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(35rem, 1fr));
+  gap: 4rem;
+  margin: 8rem 2rem;
+  margin-bottom: 3rem;
+  scroll-margin-top: 7rem;
+
+  @include respond(450px) {
+    margin: 5rem 0.8rem;
+  }
+
+  &__load-more {
+    cursor: pointer;
+    display: block;
+    transition: all 0.6s;
+    border-radius: 0.5rem;
+    background-color: #383838;
+    color: #fff;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      background-color: #2c2c2c;
+    }
+  }
+}
