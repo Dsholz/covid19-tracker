@@ -10,7 +10,7 @@ function StatCard(props) {
 
       {total && total !== 0 ? (
         <CountUp start={0} end={total} separator="," duration={2} delay={0}>
-          {({ countUpRef }) => <h1 ref={countUpRef}></h1>}
+          {({ countUpRef }) => <span className="card__text" ref={countUpRef} />}
         </CountUp>
       ) : (
         <h1>{total}</h1>
