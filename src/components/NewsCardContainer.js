@@ -2,32 +2,38 @@ import React, { Fragment } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getCovid19News } from "../Api";
+import { formatNewYorkTimesArticles } from "../utils";
 import NewsCard from "./NewsCard";
 
 function NewsCardContainer() {
   const [covid19News, setCovid19News] = useState([]);
-  const [totalCovid19News, setTotalCovidNews] = useState([]);
-  const areArticlesExhausted = covid19News.length === totalCovid19News.length;
+  const [articlePageCount, setArticlePageCount] = useState(0);
+  const [fetchingMoreArticles, setFetchingMoreArticles] = useState(false);
 
   useEffect(() => {
-    getCovid19News().then((data) => {
-      console.log(data);
-      setCovid19News(data?.articles?.slice(0, 10));
-      setTotalCovidNews(data?.articles);
+    setFetchingMoreArticles(true);
+    getCovid19News(0).then((data) => {
+      const formattedArticles = formatNewYorkTimesArticles(data);
+
+      setCovid19News(formattedArticles);
+      setFetchingMoreArticles(false);
     });
   }, []);
 
   const loadMoreArticles = () => {
-    const availablePosts = 50;
+    setFetchingMoreArticles(true);
     const presentPostLength = covid19News.length;
-    const morePosts = totalCovid19News.slice(
-      presentPostLength,
-      presentPostLength + 10
-    );
 
-    if (presentPostLength < availablePosts) {
-      setCovid19News([...covid19News, ...morePosts]);
-    }
+    getCovid19News(articlePageCount + 1).then((data) => {
+      const moreArticles = formatNewYorkTimesArticles(data);
+
+      if (presentPostLength < 50) {
+        setCovid19News([...covid19News, ...moreArticles]);
+        setArticlePageCount(articlePageCount + 1);
+      }
+
+      setFetchingMoreArticles(false);
+    });
   };
 
   return (
@@ -37,12 +43,13 @@ function NewsCardContainer() {
           <NewsCard key={article.title} articleData={article} />
         ))}
       </div>
-      {!areArticlesExhausted && (
+      {covid19News.length !== 50 && (
         <button
           className="news-card-container__load-more"
           onClick={loadMoreArticles}
+          disabled={fetchingMoreArticles}
         >
-          Load More
+          {fetchingMoreArticles ? "Loading..." : "Load More"}
         </button>
       )}
     </Fragment>
