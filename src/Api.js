@@ -1,5 +1,5 @@
 const BASE_URL = "https://disease.sh/v3";
-const NEWSAPI_API_KEY = "721b4c8c68fc44758b23f1ce147ca69b";
+const NEWYORKTIMES_API_KEY = "R8PUtCdm4lum3T2sAcfUM0bbxQdmdFvG";
 
 // Disease.sh Covid Data
 
@@ -29,7 +29,7 @@ export const getCovidHistoricalCountriesData = () =>
 
 // NewsAPI Coid News
 
-export const getCovid19News = () =>
+export const getCovid19News = (pageNo) =>
   fetch(
-    `https://newsapi.org/v2/everything?qInTitle=covid&pageSize=50&sortBy=popularity&language=en&apiKey=${NEWSAPI_API_KEY}`
+    `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=coronavirus&page=${pageNo}&api-key=${NEWYORKTIMES_API_KEY}`
   ).then((res) => res.json());

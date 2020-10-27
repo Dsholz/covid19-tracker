@@ -39,3 +39,21 @@ export const formatHistorialCountryData = (rawData) => {
 
   return formattedData;
 };
+
+export const formatNewYorkTimesArticles = (data) => {
+  const getFetchedArticles = data?.response?.docs;
+  const formattedArticles = getFetchedArticles?.map((article) => {
+    const getImageuRL = article.multimedia.find(
+      (item) => item.type === "image"
+    );
+    return {
+      title: article?.headline?.main,
+      author: article?.byline?.original,
+      publishedAt: article?.pub_date,
+      url: article?.web_url,
+      urlToImage: `https://static01.nyt.com/${getImageuRL.url}`,
+    };
+  });
+
+  return formattedArticles;
+};
