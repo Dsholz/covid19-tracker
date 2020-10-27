@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./sass/app.scss";
 import DashBoard from "./pages/DashBoard";
 import { useEffect } from "react";
-import { getCovid19News, getCovidCountriesData } from "./Api";
+import { getCovidCountriesData } from "./Api";
 
 function App() {
   const [appDataReady, setAppDataReady] = useState(false);
