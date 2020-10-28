@@ -19,6 +19,14 @@
     flex-direction: column;
     justify-content: space-between;
     margin-right: 2rem;
+
+    & > *:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    span {
+      color: #757575;
+    }
   }
 
   &__title {
