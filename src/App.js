@@ -17,7 +17,18 @@ function App() {
           id: country.countryInfo.iso2,
           name: country.country,
         }))
-        .sort();
+        .sort((countryA, countryB) => {
+          const countryNameA = countryA.name.toLowerCase();
+          const countryNameB = countryB.name.toLowerCase();
+
+          if (countryNameA < countryNameB) {
+            return -1;
+          } else if (countryNameA > countryNameB) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
 
       setCountriesList(countriesName);
       setCountriesPresentData(sortedData);
