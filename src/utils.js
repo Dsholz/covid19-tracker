@@ -42,21 +42,28 @@ export const formatHistorialCountryData = (rawData) => {
 
 export const formatNewYorkTimesArticles = (data) => {
   const getFetchedArticles = data?.response?.docs;
-  const formattedArticles = getFetchedArticles?.map((article) => {
-    const formatDate = formateUTCDate(article?.pub_date);
-    const getImageuRL = article?.multimedia?.find(
-      (item) => item.type === "image"
+  const formattedArticles = getFetchedArticles
+    ?.map((article) => {
+      const formatDate = formateUTCDate(article?.pub_date);
+      const dateInMilliseconds = Date.parse(article?.pub_date);
+      const getImageuRL = article?.multimedia?.find(
+        (item) => item.type === "image"
+      );
+      return {
+        title: article?.headline?.main,
+        author: article?.byline?.original,
+        publishedAt: formatDate,
+        url: article?.web_url,
+        dateInMilliseconds,
+        urlToImage: getImageuRL
+          ? `https://static01.nyt.com/${getImageuRL.url}`
+          : "",
+      };
+    })
+    .sort(
+      (articleA, articleB) =>
+        articleB.dateInMilliseconds - articleA.dateInMilliseconds
     );
-    return {
-      title: article?.headline?.main,
-      author: article?.byline?.original,
-      publishedAt: formatDate,
-      url: article?.web_url,
-      urlToImage: getImageuRL
-        ? `https://static01.nyt.com/${getImageuRL.url}`
-        : "",
-    };
-  });
 
   return formattedArticles;
 };
