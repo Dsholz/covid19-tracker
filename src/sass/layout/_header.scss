@@ -15,11 +15,11 @@
   }
 
   &__logo {
-    font-size: 3rem;
-    font-weight: bolder;
+    font-family: "Big Shoulders Inline Text", cursive;
+    font-size: 4rem;
 
     @include respond(800px) {
-      font-size: 2.4rem;
+      font-size: 3.5rem;
     }
 
     span {
