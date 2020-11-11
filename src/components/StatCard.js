@@ -9,7 +9,7 @@ function StatCard(props) {
       <span>{name}</span>
 
       {total && total !== 0 ? (
-        <CountUp start={0} end={total} separator="," duration={2} delay={0}>
+        <CountUp start={0} end={total} separator="," duration={1} delay={0}>
           {({ countUpRef }) => <span className="card__text" ref={countUpRef} />}
         </CountUp>
       ) : (
@@ -23,7 +23,7 @@ function StatCard(props) {
             start={0}
             end={totalToday}
             separator=","
-            duration={2}
+            duration={1}
             delay={0}
           >
             {({ countUpRef }) => <span ref={countUpRef} />}

@@ -7,7 +7,7 @@ function NewsCard(props) {
     <a className="news-card" href={url} target="blank">
       <div className="news-card__left">
         <h1 className="news-card__title">{title}</h1>
-        <span className="news-card__author">By {author}</span>
+        <span className="news-card__author">{author}</span>
         <span className="news-card__date">{publishedAt}</span>
       </div>
 
