@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import StatChart from "../components/StatChart";
 import StatMap from "../components/StatMap";
 import CountryList from "../components/CountryList";
@@ -6,11 +6,19 @@ import { formatHistorialCountryData } from "../utils";
 import StatCardContainer from "../components/StatCardContainer";
 import Header from "../components/Header";
 import NewsCardContainer from "../components/NewsCardContainer";
+import { getCovidHistoricalCountriesData } from "../Api";
 
 function DashBoard(props) {
   const [currentStatData, setCurrentStatData] = useState([]);
   const [countryCardData, setCountryCardData] = useState({});
+  const [countriesHistoricalData, setCountriesHistoricalData] = useState([]);
   const { appDataReady, countriesList, countriesPresentData } = props;
+
+  useEffect(() => {
+    getCovidHistoricalCountriesData().then((data) => {
+      setCountriesHistoricalData(data);
+    });
+  }, []);
 
   const setCountryStatData = (countryData) => {
     const formattedData = formatHistorialCountryData(countryData);
@@ -41,6 +49,8 @@ function DashBoard(props) {
       <Header
         getCountryCardData={getCountryCardData}
         countriesList={countriesList}
+        setCountryStatData={setCountryStatData}
+        countriesHistoricalData={countriesHistoricalData}
       />
       <div className="dashboard">
         <div className="dashboard__left">
@@ -57,6 +67,7 @@ function DashBoard(props) {
             countriesPresentData={countriesPresentData}
             getCountryCardData={getCountryCardData}
             setCountryStatData={setCountryStatData}
+            countriesHistoricalData={countriesHistoricalData}
           />
         </div>
       </div>
