@@ -2,18 +2,12 @@ import React, { useEffect, useState } from "react";
 import { getCovidHistoricalCountriesData } from "../Api";
 
 function CountryList(props) {
-  const [countriesHistoricalData, setCountriesHistoricalData] = useState([]);
   const {
     getCountryCardData,
     setCountryStatData,
     countriesPresentData,
+    countriesHistoricalData,
   } = props;
-
-  useEffect(() => {
-    getCovidHistoricalCountriesData().then((data) => {
-      setCountriesHistoricalData(data);
-    });
-  }, []);
 
   const renderCountryStatData = (country) => {
     const countryData = countriesHistoricalData.find(

@@ -92,7 +92,7 @@ function StatMap(props) {
       document
         .querySelector(".header__countries-list")
         .addEventListener("change", (e) => {
-          const countryId = e.target.value;
+          const countryId = e.target.value.split(",")[0];
 
           countryId &&
             statMap.zoomToMapObject(polygonSeries.getPolygonById(countryId));

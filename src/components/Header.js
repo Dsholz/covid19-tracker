@@ -1,7 +1,22 @@
 import React from "react";
 
 function Header(props) {
-  const { countriesList, getCountryCardData } = props;
+  const {
+    countriesList,
+    getCountryCardData,
+    setCountryStatData,
+    countriesHistoricalData,
+  } = props;
+
+  const renderCountryStatData = (country) => {
+    const countryData = countriesHistoricalData.find(
+      (countryData) => countryData.country === country
+    );
+
+    if (countryData) {
+      setCountryStatData(countryData);
+    }
+  };
 
   return (
     <div className="header">
@@ -13,14 +28,16 @@ function Header(props) {
         <select
           className="header__countries-list"
           onChange={(e) => {
-            getCountryCardData(e.target.value);
+            const assingValues = e.target.value.split(",");
+            getCountryCardData(assingValues[0]);
+            renderCountryStatData(assingValues[1]);
           }}
         >
           {countriesList.map((country) => (
             <option
               className="countryInfoSelect"
               key={country.name}
-              value={country.id ? country.id : ""}
+              value={`${country.id ? country.id : ""},${country.name}`}
             >
               {country.name}
             </option>
