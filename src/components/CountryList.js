@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { getCovidHistoricalCountriesData } from "../Api";
+import React from "react";
 
 function CountryList(props) {
   const {
