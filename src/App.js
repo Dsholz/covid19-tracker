@@ -48,7 +48,7 @@ function App() {
         <img
           className="loading-screen"
           src="https://media.giphy.com/media/idShevOa24HzYTgz06/giphy-downsized.gif"
-          alt="Wash Your Hand Gif"
+          alt="Keep Clean Gif"
         />
       )}
     </div>
